@@ -14,10 +14,13 @@ public class AccountMedia extends AdminMedia{
     public void saveRecommendation(String username){
         try {
             String[] temp = {""};
-            recommended.forEach((k,v) -> temp[0] += k + "\n" + v.getDescription()+'\n');
+            recommended.forEach((k,v) -> temp[0] += k + "\n" + v.getDescription()+'\n'+'\n');
+
+            System.out.println(temp[0]);
             
             file = new FileWriter(username);
             file.write(temp[0]);
+            file.close();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -33,10 +36,12 @@ public class AccountMedia extends AdminMedia{
             return allMedia.get(N);
         }
         else{
-            System.out.println("Media not found");
+            System.out.println(N + " not found\n");
             return null;
         }
     }
 
-
+    public Map<String, Media> getRecommended(){
+        return recommended;
+    }
 }
