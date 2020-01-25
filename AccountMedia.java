@@ -5,16 +5,19 @@ import java.util.Map;
 public class AccountMedia extends AdminMedia{
     
     private FileWriter file;
-    private Map<String, Media> recommended = new HashMap<>();
+    private Map<String, Media> adminMedia = new HashMap<>();
+    // private Map<String, Media> myMedia = new HashMap<>();
 
-    public AccountMedia(String username){
+    public AccountMedia(String username, Map<String, Media> adminmedialist){
         super(username);
+        this.adminMedia = adminmedialist;
+        
     }
 
     public void saveRecommendation(String username){
         try {
             String[] temp = {""};
-            recommended.forEach((k,v) -> temp[0] += k + "\n" + v.getDescription()+'\n'+'\n');
+            allMedia.forEach((k,v) -> temp[0] += v.getInfo() +'\n'+'\n');
 
             System.out.println(temp[0]);
             
@@ -29,9 +32,10 @@ public class AccountMedia extends AdminMedia{
     }
    
     public Media search(String N){
-        if (allMedia.containsKey(N)){
-            if(!recommended.containsKey(N)){
-                recommended.put(N, allMedia.get(N));
+         
+        if (adminMedia.containsKey(N)){
+            if(!allMedia.containsKey(N)){
+                allMedia.put(N, adminMedia.get(N));
             }
             return allMedia.get(N);
         }
@@ -42,6 +46,52 @@ public class AccountMedia extends AdminMedia{
     }
 
     public Map<String, Media> getRecommended(){
-        return recommended;
+        return allMedia;
+    }
+
+    public void filter(String field, String value, int i){
+
+        int count = 0;
+
+        if (field.equals("year")){
+
+            for (Media a: adminMedia.values()){
+                // System.out.println(a.getName());
+                if (a.getDescription()[0].equals(value)){
+                    System.out.println(a.getName());
+                    count++;
+                    if (count>i){
+                        return;
+                    }
+                }
+            }
+        }
+        else if (field.equals("ratings")){
+            for (Media a: adminMedia.values()){
+                if (a.getDescription()[1].equals(value)){
+                    System.out.println(a.getName());
+                    count++;
+                    if (count>i){
+                        return;
+                    }
+                }
+                
+            }
+        }
+        else if(field.equals("IMDb")){
+            for (Media a: adminMedia.values()){
+                if (a.getDescription()[2].equals(value)){
+                    System.out.println(a.getName());
+                    count++;
+                    if (count>i){
+                        System.out.println(count);
+                        return;
+                    }
+                }
+            }
+        }
+        else{
+            System.out.println(field + " attribute not found.");
+        }
     }
 }

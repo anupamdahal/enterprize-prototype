@@ -15,12 +15,17 @@ public class AdminMedia{
     protected void init(String filename){
 
         try {
-            
+            String key, value;
             file = new File(filename);
             Scanner sc = new Scanner(file);
 
             while (sc.hasNextLine()){
-                Media newMedia = new Media(sc.nextLine(), sc.nextLine());
+                key = sc.nextLine();
+                value = sc.nextLine();
+
+                String[] description = value.split("\t");
+
+                Media newMedia = new Media(key, description);
                 if (sc.hasNextLine()){
                     sc.nextLine();
                 }
