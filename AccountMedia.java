@@ -9,7 +9,7 @@ public class AccountMedia extends AdminMedia{
     // private Map<String, Media> myMedia = new HashMap<>();
 
     public AccountMedia(String username, Map<String, Media> adminmedialist){
-        super(username);
+        super(username + ".txt");
         this.adminMedia = adminmedialist;
         
     }
